@@ -1,8 +1,9 @@
-package main.java.com.example.repository;
+package com.example.repository;
 
 
-import com.example.model.Task; // Importing Task
-import com.example.repository.*;
+import com.example.model.Task; 
+import org.springframework.stereotype.Repository;
+import com.example.repository.TaskRepository;
 
 
 import java.util.Map;
@@ -11,17 +12,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
+@Repository
 public class InMemoryTaskRepository implements TaskRepository {
-    private Map<Long, Task> TasksMap = new HashMap<>();
+    private final Map<Long, Task> TasksMap = new HashMap<>();
+    private Long lastId = 0L; // Static variable to track the last assigned ID
 
     @Override
-    public Task addTask(Task task) {
-        TasksMap.put(task.getId(), task); // Use task.getId() instead of TaskMap.getId()
-        return task; // If your method is supposed to return the added task
-    }
+    public void addTask(Task task) {
+        lastId++; // Increment the last ID for a new task
+        task.setId(lastId); // Set the ID to the new task
+        TasksMap.put(task.getId(), task);
+    }   
 
     @Override
     public List<Task> getAllTasks() {
+        //if (TasksMap.length() == 0) return ({});
         return new ArrayList<>(TasksMap.values());
     }
 
@@ -29,22 +35,6 @@ public class InMemoryTaskRepository implements TaskRepository {
     public void deleteTask(Long id) {
         TasksMap.remove(id);
     }
-
-
-    /* 
-
-    @Override
-    public void updateTask(Task Task) {
-        Tasks.put(Task.getId(), Task);
-    }
-
-    @Override
-    public Task getTaskById(String id) {
-        return Tasks.get(id);
-    }
-
-    */
-
 
 }
 

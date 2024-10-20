@@ -15,12 +15,16 @@ import com.example.model.Task;
 @Service
 public class TaskService {
 
-//@Autowired
-private TaskRepository taskRepository;
+private final TaskRepository taskRepository; // Use final for better practice
+
+@Autowired
+public TaskService(TaskRepository taskRepository) { // Constructor injection
+	this.taskRepository = taskRepository;
+}
 
 
-public Task addTask(Task task) {
-	return taskRepository.addTask(task);
+public void addTask(Task task) {
+	taskRepository.addTask(task);
 }
 
 public List<Task> getAllTasks() {
@@ -31,8 +35,5 @@ public List<Task> getAllTasks() {
 public void deleteTask(Long id) {
 	taskRepository.deleteTask(id);
 }
-
-// Additional methods for finding by ID, etc.
-// Todavia falta getTaskById, updateTask
 
 }

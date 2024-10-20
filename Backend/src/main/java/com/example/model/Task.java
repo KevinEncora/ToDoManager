@@ -38,6 +38,4 @@ public class Task {
 	private String description;
 	private boolean completed;
 	private LocalDate dueDate;
-
-    // Getters and Setters
 }

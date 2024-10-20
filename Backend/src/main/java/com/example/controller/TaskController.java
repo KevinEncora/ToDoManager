@@ -29,13 +29,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/tasks")
 @CrossOrigin(origins = "http://192.168.0.69:8080")
 public class TaskController {
+	private final TaskService taskService;  
 	
 	@Autowired
-	private TaskService taskService;  
-	
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
+    }
+
 	@PostMapping
-	public Task createTask(@RequestBody Task task) {
-		return taskService.addTask(task);
+	public void createTask(@RequestBody Task task) {
+		//return
+		 taskService.addTask(task);
 	}
 
 	@GetMapping
