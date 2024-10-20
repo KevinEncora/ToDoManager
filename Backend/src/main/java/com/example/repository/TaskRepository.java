@@ -1,14 +1,22 @@
 package com.example.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.model.Task;
+
+import java.util.List; // Importing the DS List
+import com.example.model.Task; // Importing object task
 
 
-// This file is to handle the data access
-// By extends of "JpaRepository" we get buil-in methods for common operations like saving and retrieving data
-// all of this without having the need of writng SQL queries 
+// Archivo donde se declaran todos los metodos que se van a ocupar dentro del back
 
-public interface TaskRepository extends JpaRepository<Task, Long> {
 
-}
+public interface TaskRepository {
 
+    Task addTask(Task task);
+    List<Task> getAllTasks();
+    void deleteTask(Long id);
+
+    /*
+    Task getTaskById(String id);
+    void updateTask(Task task);
+    */
+
+    }

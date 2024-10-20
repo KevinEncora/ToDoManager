@@ -1,5 +1,0 @@
-com/example/model/Task.class
-com/example/service/TaskService.class
-com/example/repository/TaskRepository.class
-com/example/ProjectApplication.class
-com/example/controller/TaskController.class
