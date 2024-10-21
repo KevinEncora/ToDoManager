@@ -35,7 +35,8 @@ public class Task {
 
 	private Long id;
     private String title;
-	private String description;
-	private boolean completed;
+	private String priority;
 	private LocalDate dueDate;
+	private LocalDate creationDate;
+	private boolean isDone;
 }
