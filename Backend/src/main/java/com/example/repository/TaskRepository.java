@@ -13,6 +13,7 @@ public interface TaskRepository {
     List<Task> getAllTasks();
     List<Task> getIndexTasks(int index);
     boolean updateTask(Long id);
+    Task getTasks(Long id);    
     void deleteTask(Long id);
     List<Task> searchTasks(String name, String priority, boolean state, String date);
 

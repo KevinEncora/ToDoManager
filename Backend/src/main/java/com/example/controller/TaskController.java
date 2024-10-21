@@ -55,6 +55,11 @@ public class TaskController {
 		return taskService.getIndexTasks(index);
 	}
 
+	@GetMapping("/search/{id}")
+	public Task getTasks(@PathVariable Long id) {
+		return taskService.getTasks(id);
+	}
+
 	@PatchMapping("/{id}")
 	public boolean updateTask(@PathVariable Long id) {
 		return taskService.updateTask(id);

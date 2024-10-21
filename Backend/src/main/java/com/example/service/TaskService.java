@@ -37,6 +37,10 @@ public List<Task> getIndexTasks(int index) {
 public boolean updateTask(Long id) {
 	return taskRepository.updateTask(id);
 }
+
+public Task getTasks(Long id) {
+	return taskRepository.getTasks(id);
+}
   
 public void deleteTask(Long id) {
 	taskRepository.deleteTask(id);

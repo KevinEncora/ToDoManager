@@ -68,6 +68,18 @@ public class InMemoryTaskRepository implements TaskRepository {
 
 
     @Override
+    public Task getTasks(Long id) {
+        if (TasksMap.containsKey(id)) {
+            Task existingTask = TasksMap.get(id);
+    
+            return existingTask;
+        }
+        return null; // Task not found
+    }
+
+
+
+    @Override
     public List<Task> searchTasks(String name, String priority, boolean state, String date) {
         // Date startDate = parseDate(date); 
         // Date startDate = date;

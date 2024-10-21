@@ -116,9 +116,9 @@ const TaskList: React.FC<TaskListProps> = ({ id, onDelete, onEdit }) => {
                 ) : (
                     tasks.map(task => (
                         <tr key={task.id} style={{textAlign:'center'}}>
-                            {/*
+                            
                             <td> <button className="btn btn-outline-info" onClick={() => onEdit(task.id)}>Edit</button> </td>    
-                            */}
+                            
                             <td></td>
                             <td>{task.title}</td>
                             <td>{task.priority}</td>
