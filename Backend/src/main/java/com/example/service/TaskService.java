@@ -22,7 +22,6 @@ public TaskService(TaskRepository taskRepository) { // Constructor injection
 	this.taskRepository = taskRepository;
 }
 
-
 public void addTask(Task task) {
 	taskRepository.addTask(task);
 }
@@ -31,9 +30,20 @@ public List<Task> getAllTasks() {
 	return taskRepository.getAllTasks();
 }
 
+public List<Task> getIndexTasks(int index) {
+	return taskRepository.getIndexTasks(index);
+}
+
+public boolean updateTask(Long id) {
+	return taskRepository.updateTask(id);
+}
   
 public void deleteTask(Long id) {
 	taskRepository.deleteTask(id);
+}
+
+public List<Task> searchTasks(String name, String priority, boolean state, String date) {
+	return taskRepository.searchTasks(name, priority, state, date);
 }
 
 }

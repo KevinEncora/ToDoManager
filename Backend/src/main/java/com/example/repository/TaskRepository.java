@@ -11,6 +11,9 @@ public interface TaskRepository {
 
     void addTask(Task task);
     List<Task> getAllTasks();
+    List<Task> getIndexTasks(int index);
+    boolean updateTask(Long id);
     void deleteTask(Long id);
+    List<Task> searchTasks(String name, String priority, boolean state, String date);
 
     }

@@ -27,7 +27,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/tasks")
-@CrossOrigin(origins = "http://192.168.0.69:8080")
+
+/*
+//@CrossOrigin(origins = "http://192.168.0.69:8080")
+@CrossOrigin(origins = {"http://192.168.0.69:8080", "http://192.168.0.69:8080/api/tasks"})
+*/
 public class TaskController {
 	private final TaskService taskService;  
 	
@@ -46,8 +50,32 @@ public class TaskController {
 		return taskService.getAllTasks();
 	}
 
+	@GetMapping("/{index}")
+	public List<Task> getIndexTasks(@PathVariable int index) {
+		return taskService.getIndexTasks(index);
+	}
+
+	@PatchMapping("/{id}")
+	public boolean updateTask(@PathVariable Long id) {
+		return taskService.updateTask(id);
+	}
+
 	@DeleteMapping("/{id}")
 	public void deleteTask(@PathVariable Long id) {
 		taskService.deleteTask(id);
 	}
+
+	@GetMapping("/search")
+    public List<Task> searchTasks(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false, defaultValue = "All") String priority,
+            @RequestParam(required = false, defaultValue = "true") String state,
+            @RequestParam(required = false) String date) {
+        
+			// para facilitar la logica despues, lo convertimos directamente al llmar al back
+			Boolean stateBoolean = Boolean.parseBoolean(state);
+
+        return taskService.searchTasks(name, priority, stateBoolean, date);
+    }
+
 }

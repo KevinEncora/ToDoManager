@@ -11,12 +11,13 @@ interface Task {
 
 interface TaskListProps {
     //tasks: Task[];
+    id: any;
     onDelete: (id: number) => void;
     onEdit: (id: number) => void;
 }
 
 
-const TaskList: React.FC<TaskListProps> = ({ onDelete, onEdit }) => {
+const TaskList: React.FC<TaskListProps> = ({ id, onDelete, onEdit }) => {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -41,7 +42,7 @@ const TaskList: React.FC<TaskListProps> = ({ onDelete, onEdit }) => {
         };
 
         fetchTasks();
-    }, []); // Runs once on mount
+    }, [id]); // Runs once on mount
 
 
     if (loading) {
@@ -62,24 +63,31 @@ const TaskList: React.FC<TaskListProps> = ({ onDelete, onEdit }) => {
             )
         );
 
-        /*
+        
         // Send the updated status to the backend
         try {
             const taskToUpdate = tasks.find(task => task.id === id);
             if (taskToUpdate) {
-                await fetch(`YOUR_BACKEND_API_ENDPOINT/${id}`, { // Update the URL based on your backend API
-                    method: 'PATCH', // Use PATCH for partial updates
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ done: !taskToUpdate.done }), // Send updated done status
-                });
+                try {
+                    const response = await fetch(`http://localhost:9090/api/tasks/${id}`, {
+                        method: 'PATCH'
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    else {
+                        console.log("Updating alright!");   
+                    }
+                } 
+                catch (error) {
+                    setError('An unknown error occurred while updating');
+                } 
             }
         } catch (error: unknown) {
             console.error('Error updating task:', error);
-            // Optionally, you could revert the optimistic update here
         }
-            */
+            
     };
 
 
@@ -100,7 +108,7 @@ const TaskList: React.FC<TaskListProps> = ({ onDelete, onEdit }) => {
                 tienen registros de tareas, para esto hacemos uso del operador ternario */}
                 {tasks.length === 0 ? (
                     <tr>
-                        <td colSpan={5} style={{ textAlign: 'center', padding: '20px' }}>
+                        <td colSpan={6} style={{ textAlign: 'center', padding: '20px' }}>
                             No hay tareas disponibles
                         </td>
                     </tr>
@@ -108,7 +116,10 @@ const TaskList: React.FC<TaskListProps> = ({ onDelete, onEdit }) => {
                 ) : (
                     tasks.map(task => (
                         <tr key={task.id} style={{textAlign:'center'}}>
+                            {/*
                             <td> <button className="btn btn-outline-info" onClick={() => onEdit(task.id)}>Edit</button> </td>    
+                            */}
+                            <td></td>
                             <td>{task.title}</td>
                             <td>{task.priority}</td>
                             <td>{task.dueDate}</td>

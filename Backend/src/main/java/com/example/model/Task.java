@@ -39,4 +39,15 @@ public class Task {
 	private LocalDate dueDate;
 	private LocalDate creationDate;
 	private boolean isDone;
+
+
+	public void setIsDone(boolean isDone) {
+		this.isDone = isDone;
+	}
+
+	/* 
+	public boolean getIsDone() {
+		return this.isDone;
+	}	
+	*/
 }

@@ -32,9 +32,7 @@ const App: React.FC = () => {
         <div className="container mt-4">
 
             {/* Componente para la busqueda de las tareas dependiendo filtros */}
-            <SearchBar onSearch={function (filters: { name: string; priority: string; state: string; }): void {
-                throw new Error('Function not implemented.');
-            } } />
+            <SearchBar/>
 
             {/* Componente del boton para agragar una nueva tarea */}
             <AddTodoButton onAdd={handleCreateTask} />
@@ -43,7 +41,7 @@ const App: React.FC = () => {
             <AddTask show={showModal} handleClose={handleClose} />
 
             {/* Componente para mostrar todas las tareas que se tienen */}
-            <TaskList onDelete={handleDelete} onEdit={handleEdit} />
+            <TaskList onDelete={handleDelete} onEdit={handleEdit} id={undefined} />
 
         </div>
     );

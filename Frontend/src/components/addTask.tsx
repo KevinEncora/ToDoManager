@@ -9,7 +9,7 @@ interface AddTaskProps {
 const AddTask: React.FC<AddTaskProps> = ({ show, handleClose }) => {
 
     const [taskName, setTaskName] = useState('');
-    const [priority, setPriority] = useState('low');
+    const [priority, setPriority] = useState('Low');
     const [dueDate, setDueDate] = useState('');
     const [creationDate, setCreationDate] = useState('');
     const [isDone, setIsDone] = useState(false);
@@ -64,7 +64,7 @@ const AddTask: React.FC<AddTaskProps> = ({ show, handleClose }) => {
             
             // Hacemos reset de los cambios hechos en el form despues de agregar la tarea correctamente a la BD
             setTaskName('');
-            setPriority('low');
+            setPriority('Low');
             setDueDate('');
         }
 
@@ -124,9 +124,9 @@ const AddTask: React.FC<AddTaskProps> = ({ show, handleClose }) => {
                                 style={{ border: '1px solid black', marginBottom:'2%'}} 
                                 onChange={(e) => setPriority(e.target.value)}
                             >
-                                <option selected value="low">Low</option>
-                                <option value="medium">Medium</option>
-                                <option value="high">High</option>
+                                <option selected value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
                             </select>
                         </div>
     

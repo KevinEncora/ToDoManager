@@ -1,17 +1,42 @@
 import React, { useState } from 'react';
 
-const SearchBar: React.FC<{ onSearch: (filters: { name: string; priority: string; state: string }) => void }> = ({ onSearch }) => {
+const SearchBar: React.FC = () => {
     const [taskName, setTaskName] = useState('');
     const [priority, setPriority] = useState('All');
     const [state, setState] = useState('All');
+    const [date, setDate] = useState('');
 
-    const handleSearch = () => {
-        onSearch({ name: taskName, priority, state });
+    const handleSearch = async () => {
+        const filters = { name: taskName, priority, state, date };
+
+        const baseUrl = 'http://192.168.0.69:9090/api/tasks/search';
+    
+        // Build query parameters
+        const queryParams = new URLSearchParams({
+            name: taskName || '',
+            priority,
+            state: state.toString(),
+            date: date || ''
+        });
+
+        try {
+            const response = await fetch(`${baseUrl}?${queryParams.toString()}`);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+    
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
+            throw error;
+        }
+
     };
 
-   return (
+    return (
         <div className="row mb-4" style={{ border: '2px solid black', paddingBottom: '20px' }}>
-            
             {/* Task Name */}
             <div className="col-sm-12">
                 <label htmlFor="name" className="form-label">Name</label>
@@ -21,6 +46,8 @@ const SearchBar: React.FC<{ onSearch: (filters: { name: string; priority: string
                     className="form-control" 
                     placeholder="Name" 
                     style={{ border: '2px solid black' }} 
+                    value={taskName}
+                    onChange={(e) => setTaskName(e.target.value)} 
                 />
             </div>
 
@@ -33,8 +60,10 @@ const SearchBar: React.FC<{ onSearch: (filters: { name: string; priority: string
                             id="priority" 
                             className="form-select" 
                             style={{ border: '2px solid black' }} 
+                            value={priority}
+                            onChange={(e) => setPriority(e.target.value)} 
                         >
-                            <option selected>All</option>
+                            <option>All</option>
                             <option>High</option>
                             <option>Medium</option>
                             <option>Low</option>
@@ -43,7 +72,7 @@ const SearchBar: React.FC<{ onSearch: (filters: { name: string; priority: string
                 </div>
             </div>
 
-            {/* Task Status and Button */}
+            {/* Task Status and Date */}
             <div className="col-sm-12 mt-2">
                 <div className="row">
                     {/* Task Status */}
@@ -53,22 +82,36 @@ const SearchBar: React.FC<{ onSearch: (filters: { name: string; priority: string
                             id="status" 
                             className="form-select" 
                             style={{ border: '2px solid black' }} 
+                            value={state}
+                            onChange={(e) => setState(e.target.value)} 
                         >
-                            <option selected>All</option>
+                            <option>All</option>
                             <option>Done</option>
                             <option>Undone</option>
                         </select>
                     </div>
 
-                    {/* Search Button */}
-                    <div className="col-6 d-flex align-items-center justify-content-center mt-4" >
-                        <button className="btn btn-primary w-25">Search</button>
+                    {/* Date Input */}
+                    <div className="col-6">
+                        <label htmlFor="date" className="form-label">From date</label>
+                        <input 
+                            type="date" 
+                            id="date" 
+                            className="form-control" 
+                            style={{ border: '2px solid black' }} 
+                            value={date}
+                            onChange={(e) => setDate(e.target.value)} 
+                        />
                     </div>
                 </div>
+            </div>
+
+            {/* Search Button */}
+            <div className="col-sm-12 d-flex align-items-center justify-content-center mt-4">
+                <button className="btn btn-primary w-25" onClick={handleSearch}>Search</button>
             </div>
         </div>
     );
 };
-
 
 export default SearchBar;
